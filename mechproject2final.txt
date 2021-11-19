@@ -1,0 +1,56 @@
+
+	% inputs the value of sigma_x,sigma_y,Tau_xy:
+	sigma_x = input('value of sigma_x:')
+	sigma_y = input('value of sigma_y:')
+	Tau_xy = input('value of Tau_xy:')
+
+	%Average normal stress:
+        sigma_avg = ((sigma_x + sigma_y)/2);
+
+        %Radius of Mohr circle:
+        R = sqrt(((((sigma_x)-(sigma_y))/2)^2 + (Tau_xy)^2));
+
+        %Principal Stresses:
+        sigma_max = sigma_avg + R;
+        sigma_min = sigma_avg - R;
+
+        %Inclination of the Principal planes:
+        theta_p1 = (atand((2*Tau_xy)/((sigma_x)-(sigma_y))))/2;
+        theta_p2 = theta_p1 + 90;
+
+        %Inclination of the Shear Planes:
+        theta_s1 = (atand(-(((sigma_x)-(sigma_y))/(2*Tau_xy))))/2;
+        theta_s2 = theta_s1 + 90;
+
+        %Condition for Maximum in-plane shear stress and Absolute Shear Stress:
+        if(sigma_max>0 && sigma_min<0)
+        
+           Tau_max_in = sqrt(((((sigma_x)-(sigma_y))/2)^2 + (Tau_xy)^2));
+
+           Tau_max_out = sqrt(((((sigma_x)-(sigma_y))/2)^2 + (Tau_xy)^2));
+
+        
+        elseif(sigma_max>0 && sigma_min>0)
+        
+            Tau_max_in = sqrt(((((sigma_x)-(sigma_y))/2)^2 + (Tau_xy)^2));
+
+            Tau_max_out = sigma_max/2;
+        
+        elseif(sigma_max<0 && sigma_min<0)
+        
+            Tau_max_in = sqrt(((((sigma_x)-(sigma_y))/2)^2 + (Tau_xy)^2));
+
+            Tau_max_out = abs(sigma_min)/2;
+	
+	end	
+      
+	
+	%output values
+
+	fprintf('\n Principal plane is at theta_p1 = %5.2f Degrees, and theta_p2 = %5.2f Degrees \n',theta_p1,theta_p2);
+	fprintf('\n Principal stresses are \n sigma_max = %5.2f MPa, and \n sigma_min = %5.2f MPa \n',sigma_max,sigma_min);
+	fprintf('\n Shear plane is at theta_s1 = %5.2f Degrees, and theta_s2 = %5.2f Degrees \n',theta_s1,theta_s2);
+	fprintf('\n Maximum in-plane shear stress is Tau_max(in-plane) = %5.2f MPa\n',Tau_max_in);
+	fprintf('\n Absolute Maximum shear stress is Tau_max(Absolute) = %5.2f MPa\n',Tau_max_out);
+	fprintf('\n Average normal stress is sigma_avg = %5.2f MPa \n',sigma_avg);
+
